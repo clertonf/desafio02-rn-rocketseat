@@ -1,6 +1,5 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Container,
@@ -14,20 +13,21 @@ import {
   Icon,
   BackButton,
   Title,
-} from './styles';
+} from "./styles";
+import { View } from "react-native";
 
 interface HeaderProps {
   user?: {
     name: string;
     avatar_url: string;
-  }
+  };
 }
 
 export function Header({ user }: HeaderProps) {
   const { navigate, goBack } = useNavigation();
 
   function handleAddPass() {
-    navigate('RegisterLoginData');
+    navigate("RegisterLoginData");
   }
 
   return (
@@ -36,15 +36,21 @@ export function Header({ user }: HeaderProps) {
       style={{
         ...(user
           ? {
-            backgroundColor: '#1967FB'
-          }
+              backgroundColor: "#1967FB",
+            }
           : {
-            backgroundColor: '#FFFFFF'
-          })
+              backgroundColor: "#FFFFFF",
+            }),
       }}
     >
       {user ? (
-        <>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 32,
+          }}
+        >
           <AboutUser>
             <Avatar source={{ uri: user.avatar_url }} />
 
@@ -53,32 +59,29 @@ export function Header({ user }: HeaderProps) {
                 Olá, <BoldText>{user.name}</BoldText>
               </HelloMessage>
 
-              <SecondaryMessage>
-                Sinta-se seguro aqui
-              </SecondaryMessage>
+              <SecondaryMessage>Sinta-se seguro aqui</SecondaryMessage>
             </TextContainer>
           </AboutUser>
 
           <AddButton onPress={handleAddPass}>
-            <Icon
-              name="plus"
-              color="#FFFFFF"
-              size={24}
-            />
+            <Icon name="plus" color="#FFFFFF" size={24} />
           </AddButton>
-        </>
+        </View>
       ) : (
-        <>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 32,
+          }}
+        >
           <BackButton onPress={goBack}>
-            <Icon
-              name="chevron-left"
-              color="#1967FB"
-              size={28}
-            />
+            <Icon name="chevron-left" color="#1967FB" size={28} />
           </BackButton>
 
           <Title>Cadastro de senha</Title>
-        </>
+        </View>
       )}
     </Container>
   );
